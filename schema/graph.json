@@ -1,0 +1,34 @@
+{
+  "name": "synctrans",
+  "title": "SyncTrans — Real-time Speech Translation",
+  "width": 1240,
+  "height": 860,
+  "groups": {
+    "client":   ["#dbeafe", "#3b82f6", "#1e3a8a"],
+    "cli":      ["#e5e7eb", "#6b7280", "#374151"],
+    "relay":    ["#dcfce7", "#22c55e", "#14532d"],
+    "core":     ["#ede9fe", "#8b5cf6", "#4c1d95"],
+    "external": ["#ffedd5", "#f97316", "#7c2d12"]
+  },
+  "nodes": [
+    {"id": "ios",       "label": "iOS App",        "group": "client",   "shape": "box", "tier": 0, "sublabels": ["ContentView", "AudioStreamer", "RelayClient", "Models"]},
+    {"id": "cli",       "label": "CLI (synctrans)", "group": "cli",      "shape": "box", "tier": 0, "sublabels": ["main.go", "file → text"]},
+    {"id": "relay",     "label": "relay server",   "group": "relay",    "shape": "box", "tier": 1, "sublabels": ["server.go  /ws", "session.go", "auth token", "/healthz"]},
+    {"id": "stt",       "label": "stt",            "group": "core",     "shape": "box", "tier": 2, "sublabels": ["openai_realtime (WSS)", "file (REST)"]},
+    {"id": "translate", "label": "translate",      "group": "core",     "shape": "box", "tier": 2, "sublabels": ["Claude Haiku client"]},
+    {"id": "protocol",  "label": "protocol",       "group": "core",     "shape": "box", "tier": 2, "sublabels": ["interim / segment", "translation JSON"]},
+    {"id": "openai",    "label": "OpenAI",         "group": "external", "shape": "ext", "tier": 3, "sublabels": ["Realtime WSS + REST STT"]},
+    {"id": "claude",    "label": "Claude Haiku",   "group": "external", "shape": "ext", "tier": 3, "sublabels": ["Anthropic API"]}
+  ],
+  "edges": [
+    {"source": "ios",       "target": "relay",     "style": "solid",  "arrow": "both"},
+    {"source": "ios",       "target": "protocol",  "style": "dashed", "arrow": "one"},
+    {"source": "relay",     "target": "protocol",  "style": "dashed", "arrow": "one"},
+    {"source": "relay",     "target": "stt",       "style": "solid",  "arrow": "one"},
+    {"source": "relay",     "target": "translate", "style": "solid",  "arrow": "one"},
+    {"source": "cli",       "target": "stt",       "style": "solid",  "arrow": "one"},
+    {"source": "cli",       "target": "translate", "style": "solid",  "arrow": "one"},
+    {"source": "stt",       "target": "openai",    "style": "solid",  "arrow": "both"},
+    {"source": "translate", "target": "claude",    "style": "solid",  "arrow": "both"}
+  ]
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  These keys are REQUIRED for the app to work. In Xcode 15+ the SwiftUI app
+  template has no Info.plist file by default — add each key under the target's
+  "Info" tab (Custom iOS Target Properties), or set "Generate Info.plist File"
+  to No and use this file. Values explained:
+
+    NSMicrophoneUsageDescription  — without it the app crashes on first mic use.
+    NSLocalNetworkUsageDescription — iOS prompts before letting the app reach a
+                                     LAN address (your Mac running the relay).
+    NSAppTransportSecurity / NSAllowsLocalNetworking — permits the cleartext
+        ws:// connection to the relay on the local network. If you ever point
+        the app at a non-local address, you'll need a different ATS exception
+        (or serve wss:// with TLS).
+-->
+<plist version="1.0">
+<dict>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>SyncTrans records talks to transcribe and translate them in real time.</string>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>SyncTrans connects to your translation relay running on the local network.</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsLocalNetworking</key>
+        <true/>
+    </dict>
+</dict>
+</plist>

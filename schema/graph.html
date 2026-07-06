@@ -1,0 +1,117 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>SyncTrans</title>
+<style>
+ :root{color-scheme:light dark}*{box-sizing:border-box}
+ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f8fafc;color:#0f172a;overflow:hidden}
+ header{position:fixed;top:0;left:0;right:0;padding:12px 18px;z-index:10;background:linear-gradient(#f8fafcf0,#f8fafc00);pointer-events:none}
+ h1{font-size:20px;margin:0 0 6px;font-weight:800}
+ .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:#475569}
+ .lg{display:inline-flex;align-items:center;gap:5px}.lg i{width:11px;height:11px;border-radius:3px;display:inline-block}
+ .hint{position:fixed;bottom:10px;left:18px;font-size:12px;color:#64748b;z-index:10}
+ #reset{position:fixed;bottom:10px;right:18px;z-index:11;font-size:12px;padding:6px 12px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#334155;cursor:pointer}
+ svg{width:100vw;height:100vh;display:block;cursor:grab}svg.grab{cursor:grabbing}
+ .hd{font:700 15px -apple-system,"Segoe UI",Arial,sans-serif}.sb{font:12px "SF Mono",Menlo,Consolas,monospace}
+ .node{cursor:pointer}.node rect,.node path{transition:opacity .15s}.dim{opacity:.14}
+ .edge{transition:opacity .15s,stroke-width .15s}.edge.hot{stroke:#0f172a;stroke-width:3}
+ .pkt{filter:drop-shadow(0 0 3px currentColor)}
+ @media(prefers-color-scheme:dark){body{background:#0b1120;color:#e2e8f0}header{background:linear-gradient(#0b1120f0,#0b112000)}.legend,.hint{color:#94a3b8}#reset{background:#1e293b;color:#e2e8f0;border-color:#334155}svg{background:#0b1120}.edge.hot{stroke:#e2e8f0}}
+</style></head><body>
+<header><h1>SyncTrans</h1><div class="legend"><span class="lg"><i style="background:#3b82f6"></i>client</span><span class="lg"><i style="background:#6b7280"></i>cli</span><span class="lg"><i style="background:#22c55e"></i>relay</span><span class="lg"><i style="background:#8b5cf6"></i>core</span><span class="lg"><i style="background:#f97316"></i>external</span></div></header>
+<button id="reset">reset view</button>
+<div class="hint">packets = live service calls · drag to pan · scroll to zoom · hover to trace · click to isolate</div>
+<svg id="svg" viewBox="0 0 1240 860">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#64748b"/></marker></defs>
+<g id="edges"><path id="e0" class="edge" data-src="ios" data-dst="relay" d="M900.0,230.0 L900.0,275.0 L620.0,275.0 L620.0,320.0" fill="none" stroke="#64748b" stroke-width="2"  marker-end="url(#arrow)" marker-start="url(#arrow)"/><path id="e1" class="edge" data-src="ios" data-dst="protocol" d="M900.0,230.0 L900.0,380.0 L993.3,380.0 L993.3,530.0" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrow)"/><path id="e2" class="edge" data-src="relay" data-dst="protocol" d="M620.0,440.0 L620.0,485.0 L993.3,485.0 L993.3,530.0" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrow)"/><path id="e3" class="edge" data-src="relay" data-dst="stt" d="M620.0,440.0 L620.0,485.0 L246.7,485.0 L246.7,530.0" fill="none" stroke="#64748b" stroke-width="2"  marker-end="url(#arrow)"/><path id="e4" class="edge" data-src="relay" data-dst="translate" d="M620.0,440.0 L620.0,539.5" fill="none" stroke="#64748b" stroke-width="2"  marker-end="url(#arrow)"/><path id="e5" class="edge" data-src="cli" data-dst="stt" d="M340.0,211.0 L340.0,370.5 L246.7,370.5 L246.7,530.0" fill="none" stroke="#64748b" stroke-width="2"  marker-end="url(#arrow)"/><path id="e6" class="edge" data-src="cli" data-dst="translate" d="M340.0,211.0 L340.0,375.2 L620.0,375.2 L620.0,539.5" fill="none" stroke="#64748b" stroke-width="2"  marker-end="url(#arrow)"/><path id="e7" class="edge" data-src="stt" data-dst="openai" d="M246.7,612.0 L246.7,657.0 L340.0,657.0 L340.0,702.0" fill="none" stroke="#64748b" stroke-width="2"  marker-end="url(#arrow)" marker-start="url(#arrow)"/><path id="e8" class="edge" data-src="translate" data-dst="claude" d="M620.0,602.5 L620.0,652.2 L900.0,652.2 L900.0,702.0" fill="none" stroke="#64748b" stroke-width="2"  marker-end="url(#arrow)" marker-start="url(#arrow)"/></g>
+<g id="nodes"><g class="node" data-id="ios">
+<rect x="795.0" y="110.0" width="210" height="120" rx="12" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+<rect x="795.0" y="110.0" width="6" height="120" fill="#3b82f6"/>
+<text class="hd" x="811.0" y="132.0" fill="#1e3a8a">iOS App</text>
+<line x1="809.0" y1="144.0" x2="993.0" y2="144.0" stroke="#3b82f6" stroke-opacity="0.35"/>
+<text class="sb" x="813.0" y="162.0" fill="#1e3a8a" fill-opacity="0.85">ContentView</text>
+<text class="sb" x="813.0" y="181.0" fill="#1e3a8a" fill-opacity="0.85">AudioStreamer</text>
+<text class="sb" x="813.0" y="200.0" fill="#1e3a8a" fill-opacity="0.85">RelayClient</text>
+<text class="sb" x="813.0" y="219.0" fill="#1e3a8a" fill-opacity="0.85">Models</text>
+</g>
+<g class="node" data-id="cli">
+<rect x="235.0" y="129.0" width="210" height="82" rx="12" fill="#e5e7eb" stroke="#6b7280" stroke-width="2"/>
+<rect x="235.0" y="129.0" width="6" height="82" fill="#6b7280"/>
+<text class="hd" x="251.0" y="151.0" fill="#374151">CLI (synctrans)</text>
+<line x1="249.0" y1="163.0" x2="433.0" y2="163.0" stroke="#6b7280" stroke-opacity="0.35"/>
+<text class="sb" x="253.0" y="181.0" fill="#374151" fill-opacity="0.85">main.go</text>
+<text class="sb" x="253.0" y="200.0" fill="#374151" fill-opacity="0.85">file → text</text>
+</g>
+<g class="node" data-id="relay">
+<rect x="515.0" y="320.0" width="210" height="120" rx="12" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+<rect x="515.0" y="320.0" width="6" height="120" fill="#22c55e"/>
+<text class="hd" x="531.0" y="342.0" fill="#14532d">relay server</text>
+<line x1="529.0" y1="354.0" x2="713.0" y2="354.0" stroke="#22c55e" stroke-opacity="0.35"/>
+<text class="sb" x="533.0" y="372.0" fill="#14532d" fill-opacity="0.85">server.go  /ws</text>
+<text class="sb" x="533.0" y="391.0" fill="#14532d" fill-opacity="0.85">session.go</text>
+<text class="sb" x="533.0" y="410.0" fill="#14532d" fill-opacity="0.85">auth token</text>
+<text class="sb" x="533.0" y="429.0" fill="#14532d" fill-opacity="0.85">/healthz</text>
+</g>
+<g class="node" data-id="stt">
+<rect x="141.66666666666663" y="530.0" width="210" height="82" rx="12" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2"/>
+<rect x="141.66666666666663" y="530.0" width="6" height="82" fill="#8b5cf6"/>
+<text class="hd" x="157.66666666666663" y="552.0" fill="#4c1d95">stt</text>
+<line x1="155.66666666666663" y1="564.0" x2="339.66666666666663" y2="564.0" stroke="#8b5cf6" stroke-opacity="0.35"/>
+<text class="sb" x="159.66666666666663" y="582.0" fill="#4c1d95" fill-opacity="0.85">openai_realtime (WSS)</text>
+<text class="sb" x="159.66666666666663" y="601.0" fill="#4c1d95" fill-opacity="0.85">file (REST)</text>
+</g>
+<g class="node" data-id="translate">
+<rect x="515.0" y="539.5" width="210" height="63" rx="12" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2"/>
+<rect x="515.0" y="539.5" width="6" height="63" fill="#8b5cf6"/>
+<text class="hd" x="531.0" y="561.5" fill="#4c1d95">translate</text>
+<line x1="529.0" y1="573.5" x2="713.0" y2="573.5" stroke="#8b5cf6" stroke-opacity="0.35"/>
+<text class="sb" x="533.0" y="591.5" fill="#4c1d95" fill-opacity="0.85">Claude Haiku client</text>
+</g>
+<g class="node" data-id="protocol">
+<rect x="888.3333333333334" y="530.0" width="210" height="82" rx="12" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2"/>
+<rect x="888.3333333333334" y="530.0" width="6" height="82" fill="#8b5cf6"/>
+<text class="hd" x="904.3333333333334" y="552.0" fill="#4c1d95">protocol</text>
+<line x1="902.3333333333334" y1="564.0" x2="1086.3333333333335" y2="564.0" stroke="#8b5cf6" stroke-opacity="0.35"/>
+<text class="sb" x="906.3333333333334" y="582.0" fill="#4c1d95" fill-opacity="0.85">interim / segment</text>
+<text class="sb" x="906.3333333333334" y="601.0" fill="#4c1d95" fill-opacity="0.85">translation JSON</text>
+</g>
+<g class="node" data-id="openai">
+<rect x="265.0" y="702.0" width="150" height="50" rx="25.0" fill="#ffedd5" stroke="#f97316" stroke-width="2"/>
+<text class="hd" x="340.0" y="727.0" text-anchor="middle" dominant-baseline="central" fill="#7c2d12">OpenAI</text>
+</g>
+<g class="node" data-id="claude">
+<rect x="825.0" y="702.0" width="150" height="50" rx="25.0" fill="#ffedd5" stroke="#f97316" stroke-width="2"/>
+<text class="hd" x="900.0" y="727.0" text-anchor="middle" dominant-baseline="central" fill="#7c2d12">Claude Haiku</text>
+</g></g>
+<g id="pkts"><circle class="pkt" data-src="ios" data-dst="relay" r="4" fill="#3b82f6"><animateMotion dur="1.95s" begin="0.11s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e0"/></animateMotion></circle><circle class="pkt" data-src="ios" data-dst="relay" r="4" fill="#3b82f6"><animateMotion dur="1.95s" begin="0.61s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e0"/></animateMotion></circle><circle class="pkt" data-src="ios" data-dst="relay" r="4" fill="#3b82f6"><animateMotion dur="1.95s" begin="0.36s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#e0"/></animateMotion></circle><circle class="pkt" data-src="ios" data-dst="relay" r="4" fill="#3b82f6"><animateMotion dur="1.95s" begin="0.86s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#e0"/></animateMotion></circle><circle class="pkt" data-src="ios" data-dst="protocol" r="4" fill="#3b82f6"><animateMotion dur="2.07s" begin="0.11s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e1"/></animateMotion></circle><circle class="pkt" data-src="ios" data-dst="protocol" r="4" fill="#3b82f6"><animateMotion dur="2.07s" begin="0.61s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e1"/></animateMotion></circle><circle class="pkt" data-src="relay" data-dst="protocol" r="4" fill="#22c55e"><animateMotion dur="2.44s" begin="0.20s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e2"/></animateMotion></circle><circle class="pkt" data-src="relay" data-dst="protocol" r="4" fill="#22c55e"><animateMotion dur="2.44s" begin="0.70s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e2"/></animateMotion></circle><circle class="pkt" data-src="relay" data-dst="stt" r="4" fill="#22c55e"><animateMotion dur="2.44s" begin="0.20s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e3"/></animateMotion></circle><circle class="pkt" data-src="relay" data-dst="stt" r="4" fill="#22c55e"><animateMotion dur="2.44s" begin="0.70s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e3"/></animateMotion></circle><circle class="pkt" data-src="relay" data-dst="translate" r="4" fill="#22c55e"><animateMotion dur="1.40s" begin="0.20s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e4"/></animateMotion></circle><circle class="pkt" data-src="relay" data-dst="translate" r="4" fill="#22c55e"><animateMotion dur="1.40s" begin="0.70s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e4"/></animateMotion></circle><circle class="pkt" data-src="cli" data-dst="stt" r="4" fill="#6b7280"><animateMotion dur="2.17s" begin="0.10s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e5"/></animateMotion></circle><circle class="pkt" data-src="cli" data-dst="stt" r="4" fill="#6b7280"><animateMotion dur="2.17s" begin="0.60s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e5"/></animateMotion></circle><circle class="pkt" data-src="cli" data-dst="translate" r="4" fill="#6b7280"><animateMotion dur="3.20s" begin="0.10s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e6"/></animateMotion></circle><circle class="pkt" data-src="cli" data-dst="translate" r="4" fill="#6b7280"><animateMotion dur="3.20s" begin="0.60s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e6"/></animateMotion></circle><circle class="pkt" data-src="stt" data-dst="openai" r="4" fill="#8b5cf6"><animateMotion dur="1.40s" begin="0.28s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e7"/></animateMotion></circle><circle class="pkt" data-src="stt" data-dst="openai" r="4" fill="#8b5cf6"><animateMotion dur="1.40s" begin="0.78s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e7"/></animateMotion></circle><circle class="pkt" data-src="stt" data-dst="openai" r="4" fill="#8b5cf6"><animateMotion dur="1.40s" begin="0.53s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#e7"/></animateMotion></circle><circle class="pkt" data-src="stt" data-dst="openai" r="4" fill="#8b5cf6"><animateMotion dur="1.40s" begin="1.03s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#e7"/></animateMotion></circle><circle class="pkt" data-src="translate" data-dst="claude" r="4" fill="#8b5cf6"><animateMotion dur="2.00s" begin="0.28s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e8"/></animateMotion></circle><circle class="pkt" data-src="translate" data-dst="claude" r="4" fill="#8b5cf6"><animateMotion dur="2.00s" begin="0.78s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#e8"/></animateMotion></circle><circle class="pkt" data-src="translate" data-dst="claude" r="4" fill="#8b5cf6"><animateMotion dur="2.00s" begin="0.53s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#e8"/></animateMotion></circle><circle class="pkt" data-src="translate" data-dst="claude" r="4" fill="#8b5cf6"><animateMotion dur="2.00s" begin="1.03s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#e8"/></animateMotion></circle></g>
+</svg>
+<script>
+const ADJ={"ios": ["protocol", "relay"], "cli": ["translate", "stt"], "relay": ["translate", "protocol", "ios", "stt"], "stt": ["cli", "openai", "relay"], "translate": ["cli", "claude", "relay"], "protocol": ["ios", "relay"], "openai": ["stt"], "claude": ["translate"]};
+const svg=document.getElementById('svg');
+const nodes=[...document.querySelectorAll('.node')],edges=[...document.querySelectorAll('.edge')],pkts=[...document.querySelectorAll('.pkt')];
+let locked=null;
+function apply(id){
+ if(!id){nodes.forEach(n=>n.classList.remove('dim'));edges.forEach(e=>{e.classList.remove('hot');e.style.opacity=1});pkts.forEach(p=>p.style.opacity=1);return}
+ const keep=new Set([id,...ADJ[id]]);
+ nodes.forEach(n=>n.classList.toggle('dim',!keep.has(n.dataset.id)));
+ const on=e=>e.dataset.src===id||e.dataset.dst===id;
+ edges.forEach(e=>{e.classList.toggle('hot',on(e));e.style.opacity=on(e)?1:0.1});
+ pkts.forEach(p=>p.style.opacity=on(p)?1:0.05);
+}
+nodes.forEach(n=>{
+ n.addEventListener('mouseenter',()=>{if(!locked)apply(n.dataset.id)});
+ n.addEventListener('mouseleave',()=>{if(!locked)apply(null)});
+ n.addEventListener('click',e=>{e.stopPropagation();locked=locked===n.dataset.id?null:n.dataset.id;apply(locked)});
+});
+svg.addEventListener('click',()=>{locked=null;apply(null)});
+let vb={x:0,y:0,w:1240,h:860};
+function setVB(){svg.setAttribute('viewBox',`${vb.x} ${vb.y} ${vb.w} ${vb.h}`)}
+document.getElementById('reset').addEventListener('click',()=>{vb={x:0,y:0,w:1240,h:860};setVB();locked=null;apply(null)});
+svg.addEventListener('wheel',e=>{e.preventDefault();const r=svg.getBoundingClientRect();
+ const mx=vb.x+(e.clientX-r.left)/r.width*vb.w,my=vb.y+(e.clientY-r.top)/r.height*vb.h,k=e.deltaY<0?0.9:1.1;
+ vb.w=Math.max(300,Math.min(1240*2,vb.w*k));vb.h=Math.max(200,Math.min(860*2,vb.h*k));
+ vb.x=mx-(e.clientX-r.left)/r.width*vb.w;vb.y=my-(e.clientY-r.top)/r.height*vb.h;setVB()},{passive:false});
+let drag=null;
+svg.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,vx:vb.x,vy:vb.y};svg.classList.add('grab')});
+window.addEventListener('pointermove',e=>{if(!drag)return;const r=svg.getBoundingClientRect();
+ vb.x=drag.vx-(e.clientX-drag.x)/r.width*vb.w;vb.y=drag.vy-(e.clientY-drag.y)/r.height*vb.h;setVB()});
+window.addEventListener('pointerup',()=>{drag=null;svg.classList.remove('grab')});
+</script></body></html>

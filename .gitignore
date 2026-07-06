@@ -1,0 +1,14 @@
+# Compiled binaries
+/synctrans
+/relay
+*.exe
+*.test
+*.out
+
+# macOS / IDE
+.DS_Store
+.idea/
+
+# Local env / secrets
+.env
+*.local
