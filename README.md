@@ -7,6 +7,14 @@ server-side and stream back word-by-word.
 The first target pair is **Hebrew → English**, but the pipeline is
 language-agnostic (languages are chosen per connection).
 
+## Architecture
+
+![SyncTrans architecture — packets flow from the iOS app and CLI through the relay out to OpenAI (speech-to-text) and Claude Haiku (translation)](schema/graph.gif)
+
+*Animated block-scheme — the moving packets show how the components communicate.
+An interactive version (pan, zoom, hover to trace calls, click to isolate) lives in
+[`schema/graph.html`](schema/graph.html).*
+
 ## How it works
 
 ```
